@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" width="720" height="720">
+	<title>New Project</title>
+	<defs>
+		<image  width="720" height="720" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtAAAALQAQMAAACDmdXfAAAAAXNSR0IB2cksfwAAAAZQTFRFAAAA////pdmf3QAAASBJREFUeJztzNsNQEAQAEAn/ulAKVpXihIoQKhA4nH7s2YKmNKEKWq1Wq1Wq9VqtVqtVqvVarVanbXu12rlNqjVarVarVar1Wq1Wq1Wq9VqtVqtVqvVj+ujfVuOi1qtVqvVarVarVar1Wq1Wq1Wq9VqtVqtVqvVarVarVar1Wq1Wq3+VT3NV9XeqdVqtVqtVqvVarVarVar1Wq1Wq1Wq9VqtVqtVqvVarVarVar1Wq1Wq1Wq9VqtVqtVqvVarVarVar1Wq1Wq1Wq9XV6/vUarVarVar1Wq1Wq1Wq9VqtVqtVqvVarVarVar1Wq1Wq1Wq9XqbPV3arVarVar1Wq1Wq1Wq9VqtVqtVquj6gBqtVqtVqvVarVarVar1Wq1Wp2uPgEI2e1YX3diSAAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Color Fill 1" href="#img1" x="0" y="0"/>
+</svg>
