@@ -79,40 +79,41 @@ const ImageUploader = () => {
 
       <div
         id="image-container"
-        className="h-full"
         style={{
-          minHeight: '400px',
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          backgroundColor: '#cfc4b2',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '10px',
           padding: '10px',
+          backgroundColor: '#cfc4b2',
           borderRadius: '5px',
           overflowY: 'auto',
+          minHeight: '400px',
         }}
       >
-        {images.map((image, index) => (
-          <div
-            key={image.id}
-            style={{
-              marginRight: '10px',
-              marginBottom: '10px',
-              width: '100px',
-              height: 'auto',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            <div style={{ width: '100%', position: 'relative' }}>
-              <Image
-                src={image.url}
-                alt={`image-${image.id}`}
-                layout="responsive"
-                width={100} // Adjust the width as needed
-                height={100} // Adjust the height as needed
-              />
-            </div>
+        {images.map((image) => (
+          <div key={image.id} style={{ position: 'relative' }}>
+            <Image
+              src={image.url}
+              alt={`image-${image.id}`}
+              layout="responsive"
+              width={image.width}
+              height={image.height}
+            />
+            <button
+              onClick={() => handleRemoveImage(image.id)}
+              style={{
+                position: 'absolute',
+                top: '5px',
+                right: '5px',
+                background: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: '50%',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              <IoClose />
+            </button>
           </div>
         ))}
       </div>

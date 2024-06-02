@@ -45,7 +45,7 @@ const UploadPhoto = () => {
         <RiArrowGoBackLine className="h-6 w-6 text-gray-500" />
       </button>
 
-      <div className="relative z-10 mx-12 my-44 h-screen w-[90%] rounded-lg bg-white p-8 shadow-lg sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
+      <div className="relative z-10 mx-12 my-44 h-screen w-[90%] max-w-[75%] rounded-lg bg-white p-8 shadow-lg sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
         <div className="flex h-full w-full flex-col rounded-lg border-4 border-dotted border-gray-300 p-4">
           <div className="overflow-y-auto">
             <ImageUploader />

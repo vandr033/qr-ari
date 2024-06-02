@@ -26,7 +26,7 @@ const VerMensajes = () => {
   }, [])
 
   const handleGoBack = () => {
-    window.history.back()
+    window.location.href = '/admin'
   }
 
   return (
@@ -72,6 +72,13 @@ const VerMensajes = () => {
           </div>
         )}
       </div>
+
+      <button
+        onClick={handleGoBack}
+        className="absolute left-4 top-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-[#1b4850] text-white shadow-lg hover:bg-[#163a3e] focus:outline-none"
+      >
+        <RiArrowGoBackLine size={24} />
+      </button>
     </div>
   )
 }
