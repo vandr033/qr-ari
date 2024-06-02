@@ -3,13 +3,16 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import backgroundText from '../../../public/assets/images/BackgroundText.png'
 import { FaCamera, FaCommentDots } from 'react-icons/fa'
+import { createBrowserClient } from '@/utils/supabase'
 
-type Props = {}
-
-const Home = (props: Props) => {
+export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [nombre, setNombre] = useState('')
   const [mensaje, setMensaje] = useState('')
+  const [phonePrefix, setPhonePrefix] = useState('+591')
+  const [phoneNumber, setPhoneNumber] = useState('')
+
+  const supabase = createBrowserClient()
 
   const handleOpenModal = () => {
     setIsModalOpen(true)
@@ -27,22 +30,46 @@ const Home = (props: Props) => {
     setMensaje(e.target.value)
   }
 
-  const handleSubmit = () => {
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(e.target.value)
+  }
+
+  const handleSubmit = async () => {
     // Check if inputs are not empty before submitting
-    if (nombre.trim() === '' || mensaje.trim() === '') {
+    if (
+      nombre.trim() === '' ||
+      mensaje.trim() === '' ||
+      phoneNumber.trim() === ''
+    ) {
       alert('Por favor, complete todos los campos.')
       return
     }
 
-    // Handle the form submission logic here
-    console.log('Nombre:', nombre)
-    console.log('Mensaje:', mensaje)
-    handleCloseModal()
+    const telefono = phonePrefix + phoneNumber
+
+    try {
+      // Insert the message into the Supabase table
+      const { data, error } = await supabase
+        .from('mensajes')
+        .insert([{ Nombre: nombre, Mensaje: mensaje, Numero: telefono }])
+
+      if (error) {
+        throw error
+      }
+
+      // Handle the successful form submission
+      console.log('Message inserted:', data)
+      handleCloseModal()
+    } catch (error) {
+      console.error('Error inserting message:', error)
+      alert('Hubo un error al enviar el mensaje. Inténtalo de nuevo.')
+    }
   }
 
   const handleNavigate = () => {
     window.location.href = '/upload'
   }
+
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
       {/* Background pattern */}
@@ -132,6 +159,33 @@ const Home = (props: Props) => {
                 required
               />
             </div>
+            <div className="mb-4">
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="phoneInput"
+              >
+                Teléfono
+              </label>
+              <div className="mt-1 flex">
+                <select
+                  value={phonePrefix}
+                  onChange={(e) => setPhonePrefix(e.target.value)}
+                  className="rounded-l-md border border-gray-300 bg-white p-2 text-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                >
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+591">🇧🇴 +591</option>
+                  <option value="+52">🇲🇽 +52</option>
+                </select>
+                <input
+                  type="tel"
+                  id="phoneInput"
+                  className="w-full rounded-r-md border border-gray-300 p-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  value={phoneNumber}
+                  onChange={handlePhoneNumberChange}
+                  required
+                />
+              </div>
+            </div>
             <div className="flex justify-end space-x-2">
               <button
                 className="rounded-md bg-gray-300 px-4 py-2 text-black"
@@ -152,5 +206,3 @@ const Home = (props: Props) => {
     </div>
   )
 }
-
-export default Home

@@ -1,9 +1,11 @@
 'use client'
-import ImageUploader from '@/components/Images'
-import React from 'react'
+import React, { useState } from 'react'
 import { RiArrowGoBackLine } from 'react-icons/ri'
+import { FaCamera, FaCommentDots } from 'react-icons/fa'
+import Image from 'next/image'
+import backgroundText from '../../../public/assets/images/BackgroundText.png'
 
-const UploadPhoto = () => {
+const VerFotos = () => {
   const handleGoBack = () => {
     window.history.back()
   }
@@ -38,22 +40,9 @@ const UploadPhoto = () => {
         </svg>
       </div>
 
-      <button
-        className="absolute left-6 top-6 z-10 rounded-full bg-white p-2 shadow-lg"
-        onClick={handleGoBack}
-      >
-        <RiArrowGoBackLine className="h-6 w-6 text-gray-500" />
-      </button>
-
-      <div className="relative z-10 mx-12 my-44 h-screen w-[90%] rounded-lg bg-white p-8 shadow-lg sm:w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
-        <div className="flex h-full w-full flex-col rounded-lg border-4 border-dotted border-gray-300 p-4">
-          <div className="overflow-y-auto">
-            <ImageUploader />
-          </div>
-        </div>
-      </div>
+      <div className="relative z-10 mx-12 my-12 h-screen w-[90%] rounded-lg bg-white p-8 shadow-lg sm:w-full md:w-3/5 lg:w-3/5 xl:w-4/5"></div>
     </div>
   )
 }
 
-export default UploadPhoto
+export default VerFotos
