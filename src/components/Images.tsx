@@ -100,7 +100,7 @@ const ImageUploader = () => {
     }
   }
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '80%' }}>
       <input
         type="file"
         multiple
