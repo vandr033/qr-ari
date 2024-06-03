@@ -1,18 +1,21 @@
 import { useState, ChangeEvent, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { IoClose } from 'react-icons/io5'
+import { createBrowserClient } from '@/utils/supabase'
 
 interface ImageFile {
-  id: string // Add id for unique identification of each image
+  id: string
   url: string
   width: number
   height: number
+  file: File // Add the file property to the ImageFile interface
 }
 
 const ImageUploader = () => {
   const [images, setImages] = useState<ImageFile[]>([])
   const [containerWidth, setContainerWidth] = useState<number>(0)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const supabase = createBrowserClient()
 
   useEffect(() => {
     // Calculate the width of each image container dynamically based on the available space
@@ -34,7 +37,7 @@ const ImageUploader = () => {
       const imagesWithDimensions: Promise<ImageFile>[] = fileArray.map(
         async ({ id, file, url }) => {
           const dimensions = await getImageDimensions(file)
-          return { id, url, ...dimensions }
+          return { id, url, ...dimensions, file } // Include the file property
         },
       )
 
@@ -65,6 +68,37 @@ const ImageUploader = () => {
     fileInputRef.current?.click()
   }
 
+  const handleUploadClick = async () => {
+    for (const image of images) {
+      const { file } = image // Retrieve the file from the image object
+      const { data, error } = await supabase.storage
+        .from('Fotos')
+        .upload(`image_${image.id}.jpg`, file)
+
+      if (error) {
+        console.error('Error uploading image:', error.message)
+      } else {
+        uploadToDb(data)
+        console.log('Image uploaded successfully:', data)
+        // Clear the images state after successful upload
+        setImages([])
+      }
+    }
+  }
+
+  const uploadToDb = async (imagePaths: any) => {
+    console.log(imagePaths)
+    const { data, error } = await supabase
+      .from('fotosPaths')
+      .insert([{ fullPath: imagePaths.fullPath }])
+      .select()
+
+    if (error) {
+      console.error('Error inserting image paths:', error.message)
+    } else {
+      console.log('Image paths inserted successfully:', data)
+    }
+  }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <input
@@ -128,7 +162,7 @@ const ImageUploader = () => {
       {images.length > 0 && (
         <button
           type="button"
-          onClick={handleButtonClick}
+          onClick={handleUploadClick}
           className="mx-auto mt-4 rounded bg-[#c4c4c4] px-8 py-2 text-center text-black"
         >
           Confirmar!
